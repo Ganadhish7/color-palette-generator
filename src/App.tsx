@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import ColorPalette from "./ColorPalette";
+import tinycolor from "tinycolor2";
+import styles from "./App.module.css";
 
-function App() {
+function App(): JSX.Element {
+  const [colors, setColors] = useState<string[]>([]);
+
+  const generateRandomPalette = () => {
+    const newColors = Array.from({ length: 5 }, () =>
+      tinycolor.random().toHexString()
+    );
+    setColors(newColors);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ textAlign: "center", marginTop: "10px" }}>
+      <h1 className={styles.h1}>Color Palette Generator</h1>
+      <button className={styles.button} onClick={generateRandomPalette}>
+        Generate Random Palette
+      </button>
+      <ColorPalette colors={colors} />
     </div>
   );
 }
